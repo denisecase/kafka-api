@@ -4,7 +4,22 @@ Example kafka Producer and Consumer apps.
 
 Article: <https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html>
 
-Source: 
+Source: <https://github.com/denisecase/kafka-api>
+
+## Recommended Environment
+
+* [Notepad++](https://notepad-plus-plus.org/)
+* [VS Code](https://code.visualstudio.com/)
+* [VS Code Extension - Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+
+Open PowerShell as Administrator and run:
+
+```PowerShell
+choco install notepadplusplus -y
+https://chocolatey.org/packages/vscode -y
+choco install maven -y
+refreshenv
+```
 
 ## Install Prerequisities
 
