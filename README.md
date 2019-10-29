@@ -41,7 +41,7 @@ Extract and move to C:
 
 1. Right-click the tgz file / 7-zip / extract here.
 1. Right-click the .tar file / 7-zip / extract to the default folder.
-1. When done, move the kafka_2.12-2.2.0 folder to C:\.
+1. When done, move the kafka_2.12-2.3.0 folder to C:\.
 
 ## Set Zookeeper System Environment Variable
 
@@ -55,7 +55,7 @@ Variable value: C:\apache-zookeeper-3.5.6-bin
 Your paths may be different - these are the ones on my machine:
 
 JAVA_HOME   C:\Program Files\OpenJDK\jdk-13.0.1
-KAFKA_HOME  C:\kafka_2.11-2.0.0
+KAFKA_HOME  C:\kafka_2.12-2.3.0
 M2_HOME     C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2
 ZOOKEEPER_HOME C:\apache-zookeeper-3.5.6-bin
 
@@ -86,7 +86,7 @@ Create the required zoo.cfg. In C:\apache-zookeeper-3.5.6-bin\conf, copy zoo_sam
 
 ## Configure Kafka
 
-For convenience, copy the C:\kafka_2.12-2.2.0\config\server.properties file from the config folder to the C:\kafka_2.12-2.2.0\bin\windows folder. Open server.properties in Notepad++. Find and edit log.dirs=/tmp/kafka-logs to log.dirs=C:\kafka_2.12-2.2.0\logs
+For convenience, copy the C:\kafka_2.12-2.3.0\config\server.properties file from the config folder to the C:\kafka_2.12-2.3.0\bin\windows folder. Open server.properties in Notepad++. Find and edit log.dirs=/tmp/kafka-logs to log.dirs=C:\kafka_2.12-2.3.0\logs
 
 ## Start Zookeeper Service
 
@@ -106,7 +106,7 @@ Start the Kafka service. Open a new PowerShell As Administrator window in the C:
 
 ## Working with Kafka
 
-To run these, open PowerShell as Admininstrator in <C:\kafka_2.12-2.2.0\bin\windows>.
+To run these, open PowerShell as Admininstrator in <C:\kafka_2.12-2.3.0\bin\windows>.
 
 To create a topic called test, run:
 
