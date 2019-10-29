@@ -57,7 +57,6 @@ Your paths may be different - these are the ones on my machine:
 JAVA_HOME   C:\Program Files\OpenJDK\jdk-13.0.1
 KAFKA_HOME  C:\kafka_2.11-2.0.0
 M2_HOME     C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2
-MAVEN_HOME  C:\apache-maven-3.6.0
 ZOOKEEPER_HOME C:\apache-zookeeper-3.5.6-bin
 
 ## Update / Verify Path
@@ -94,7 +93,7 @@ For convenience, copy the C:\kafka_2.12-2.2.0\config\server.properties file from
 Start the Zookeeper service. Open PowerShell As Administrator (from anywhere) and run the following. Note the port and keep the window open. Zookeeper will run on default port 2181, you can change the default port in <C:\apache-zookeeper-3.5.6-bin\conf\zoo.cfg> file.
 
 ```PowerShell
-zkserver
+zkServer
 ```
 
 ## Start Kafka Service
@@ -172,6 +171,9 @@ Open a new PowerShell as Administrator in the root project folder, start the Pro
 
 ```PowerShell
 java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.Producer test
+java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerHello test
+java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerSentence test
+java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerSentenceRandom test
 ```
 
 ## Test Communications
