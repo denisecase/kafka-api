@@ -4,7 +4,7 @@ Example Kafka Producer and Consumer apps.
 
 Article: <https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html>
 
-Source: 
+Source: https://github.com/denisecase/kafka-api
 
 ## Install Prerequisities
 
