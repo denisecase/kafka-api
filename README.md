@@ -4,7 +4,7 @@ Example Kafka Producer and Consumer apps.
 
 Article: <https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html>
 
-Source: <https://github.com/denisecase/kafka-api>
+Source: https://github.com/denisecase/kafka-api
 
 ## Recommended Environment
 
@@ -12,16 +12,7 @@ Source: <https://github.com/denisecase/kafka-api>
 * [VS Code](https://code.visualstudio.com/)
 * [VS Code Extension - Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
 
-Open PowerShell as Administrator and run:
-
-```PowerShell
-choco install notepadplusplus -y
-https://chocolatey.org/packages/vscode -y
-choco install maven -y
-refreshenv
-```
-
-## Install Prerequisities
+## Prerequisities
 
 * 7-zip
 * OpenJDK or JDK (8 or up)
@@ -29,12 +20,18 @@ refreshenv
 * Apache Zookeeper
 * Kafka
 
-Open PowerShell as Administrator and run:
+## Install Any Missing Basics With Chocolatey
+
+Open PowerShell as Administrator (anywhere) and install any of the basics that are missing. 
+If you have them already, you might want to upgrade.
 
 ```PowerShell
+choco install notepadplusplus -y
+choco install vscode -y
 choco install 7zip -y
 choco install openjdk -y
 choco install maven -y
+choco upgrade all
 refreshenv
 ```
 
@@ -56,7 +53,7 @@ Extract and move to C:
 
 1. Right-click the tgz file / 7-zip / extract here.
 1. Right-click the .tar file / 7-zip / extract to the default folder.
-1. When done, move the kafka_2.12-2.2.0 folder to C:\.
+1. When done, move the kafka_2.12-2.3.0 folder to C:\.
 
 ## Set Zookeeper System Environment Variable
 
@@ -69,11 +66,12 @@ Variable value: C:\apache-zookeeper-3.5.6-bin
 
 Your paths may be different - these are the ones on my machine:
 
+```Bash
 JAVA_HOME   C:\Program Files\OpenJDK\jdk-13.0.1
-KAFKA_HOME  C:\kafka_2.11-2.0.0
+KAFKA_HOME  C:\kafka_2.12-2.3.0
 M2_HOME     C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2
-MAVEN_HOME  C:\apache-maven-3.6.0
 ZOOKEEPER_HOME C:\apache-zookeeper-3.5.6-bin
+```
 
 ## Update / Verify Path
 
@@ -98,23 +96,33 @@ mvn -v
 
 ## Configure Zookeeper
 
-Create the required zoo.cfg. In C:\apache-zookeeper-3.5.6-bin\conf, copy zoo_sample.cfg to zoo.cfg. Open zoo.cfg in Notepad++. Find and edit dataDir=/tmp/zookeeper to dataDir=C:\apache-zookeeper-3.5.6-bin\data
+Create the required zoo.cfg. In C:\apache-zookeeper-3.5.6-bin\conf, copy zoo_sample.cfg to zoo.cfg. 
+Open zoo.cfg in Notepad++. 
+Find and edit dataDir=/tmp/zookeeper to dataDir=C:\apache-zookeeper-3.5.6-bin\data
 
 ## Configure Kafka
 
-For convenience, copy the C:\kafka_2.12-2.2.0\config\server.properties file from the config folder to the C:\kafka_2.12-2.2.0\bin\windows folder. Open server.properties in Notepad++. Find and edit log.dirs=/tmp/kafka-logs to log.dirs=C:\kafka_2.12-2.2.0\logs
+For convenience, copy the C:\kafka_2.12-2.3.0\config\server.properties file 
+from the config folder to the C:\kafka_2.12-2.3.0\bin\windows folder. 
+Open server.properties in Notepad++. 
+Find and edit log.dirs=/tmp/kafka-logs to log.dirs=C:\kafka_2.12-2.3.0\logs
 
 ## Start Zookeeper Service
 
-Start the Zookeeper service. Open PowerShell As Administrator (from anywhere) and run the following. Note the port and keep the window open. Zookeeper will run on default port 2181, you can change the default port in <C:\apache-zookeeper-3.5.6-bin\conf\zoo.cfg> file.
+Start the Zookeeper service. 
+Open PowerShell As Administrator (from anywhere) and run the following. 
+Note the port and keep the window open. 
+Zookeeper will run on default port 2181, you can change the default port in <C:\apache-zookeeper-3.5.6-bin\conf\zoo.cfg> file.
 
 ```PowerShell
-zkserver
+zkServer
 ```
 
 ## Start Kafka Service
 
-Start the Kafka service. Open a new PowerShell As Administrator window in the C:\kafka_2.12-2.2.0\bin\windows folder and run the following. Keep the window open.
+Start the Kafka service. 
+Open a new PowerShell As Administrator window in the C:\kafka_2.12-2.2.0\bin\windows folder and run the following. 
+Keep the window open.
 
 ```PowerShell
  .\kafka-server-start.bat .\server.properties
@@ -122,7 +130,7 @@ Start the Kafka service. Open a new PowerShell As Administrator window in the C:
 
 ## Working with Kafka
 
-To run these, open PowerShell as Admininstrator in <C:\kafka_2.12-2.2.0\bin\windows>.
+To run these, open PowerShell as Admininstrator in <C:\kafka_2.12-2.3.0\bin\windows>.
 
 To create a topic called test, run:
 
@@ -187,6 +195,9 @@ Open a new PowerShell as Administrator in the root project folder, start the Pro
 
 ```PowerShell
 java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.Producer test
+java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerHello test
+java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerSentence test
+java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerSentenceRandom test
 ```
 
 ## Test Communications
