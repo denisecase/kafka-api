@@ -8,74 +8,90 @@ Source: https://github.com/denisecase/kafka-api
 
 ## Recommended Environment
 
-* [Notepad++](https://notepad-plus-plus.org/)
 * [VS Code](https://code.visualstudio.com/)
 * [VS Code Extension - Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
 
 ## Prerequisities
 
-* 7-zip
 * OpenJDK or JDK (8 or up)
-* Maven
-* Apache Zookeeper
-* Kafka
+* Apache Zookeeper, installed and working
+* Apache Kafka, installed and working
 
-## Install Any Missing Basics With Chocolatey
+You may want to upgrade. For example, using Chocolatey:
 
-Open PowerShell as Administrator (anywhere) and install any of the basics that are missing. 
-If you have them already, you might want to upgrade.
+Open PowerShell as Administrator (anywhere) and run
 
 ```PowerShell
-choco install notepadplusplus -y
-choco install vscode -y
-choco install 7zip -y
-choco install openjdk -y
-choco install maven -y
-choco upgrade all
+choco upgrade vscode -y
+choco upgrade openjdk -y
 refreshenv
 ```
 
-## Install Apache Zookeeper Binary Version
+Or:
 
-Go to <https://www.apache.org/dyn/closer.cgi/zookeeper/>. Choose site.  Chose the most current version (e.g., zookeeper-3.5.6), then download the file with "bin" in the name, e.g., apache-zookeeper-3.5.6-bin.tar.gz.
+```PowerShell
+choco upgrade all -y
+refreshenv
+```
 
-Extract and move to C:
+## Install Zookeeper (Separate from Kafka)
 
-1. Right-click the tar.gz file / 7-zip / extract here.
-1. Right-click the .tar file / 7-zip / extract to the default apache-zookeeper folder (with version numbers).
-1. When done, move the apache-zookeeper-3.5.6-bin folder to C:\.
+Install Zookeeper separate from Kafka. Follow the instructions provided or use Chocolatey:
 
-## Install Kafka Binary Version
+Open PowerShell as Administrator (anywhere) and run:
 
-For Kafka, go to <https://kafka.apache.org/downloads>. Chose the most current binary version (e.g., 2.12), then download the tgz file, e.g.,  kafka_2.12-2.3.0.tgz.
+```PowerShell
+choco install apache-zookeeper -y
+refreshenv
+```
 
-Extract and move to C:
+## Install Maven
 
-1. Right-click the tgz file / 7-zip / extract here.
-1. Right-click the .tar file / 7-zip / extract to the default folder.
-1. When done, move the kafka_2.12-2.3.0 folder to C:\.
+Install Maven. Follow the instructions provided or use Chocolatey:
 
-## Set Zookeeper System Environment Variable
+Open PowerShell as Administrator (anywhere) and run:
+
+```PowerShell
+choco install maven -y
+refreshenv
+```
+
+## Verify Installations
+
+Open PowerShell here as Administrator and run:
+
+```PowerShell
+java -version
+mvn -v
+```
+
+### Set/Verify Zookeeper System Environment Variable
 
 Windows + Edit System Environment Variables / Environment Variables / System Variables:
 
 Variable name: ZOOKEEPER_HOME
 Variable value: C:\apache-zookeeper-3.5.6-bin
 
-## Verify Other Environment Variables
+### Set/Verify Other Environment Variables
+
+Verify other system environment variables. 
+
+Important! Verify each path exists using the Windows File Explorer.
 
 Your paths may be different - these are the ones on my machine:
 
 ```Bash
-JAVA_HOME   C:\Program Files\OpenJDK\jdk-13.0.1
-KAFKA_HOME  C:\kafka_2.12-2.3.0
-M2_HOME     C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2
+JAVA_HOME   C:\Program Files\OpenJDK\jdk-14
+KAFKA_HOME  C:\kafka_2.12-2.4.1
+M2_HOME     C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.3
 ZOOKEEPER_HOME C:\apache-zookeeper-3.5.6-bin
 ```
 
-## Update / Verify Path
+### Set/Verify Path
 
-System Path should include
+System Path should include the following (using the variable or the full path works - you don't need both)
+
+Using variables:
 
 ```Bash
 %JAVA_HOME%\bin
@@ -85,34 +101,71 @@ System Path should include
 %ZOOKEEPER_HOME%\bin
 ```
 
-## Verify Versions
+Using Full Path (instead of variables):
 
-Open PowerShell here as Administrator and run:
+```Bash
+C:\Program Files\OpenJDK\jdk-14\bin
+C:\kafka_2.12-2.4.1\bin
+C:\kafka_2.12-2.4.1\bin\windows
+C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.3\bin
+C:\apache-zookeeper-3.5.6-bin\bin
+```
 
-```PowerShell
-java -version
-mvn -v
+Important!  Multiple Java entries in your PATH will cause problems.  
+For example, now that I use OpenJDK, I deleted old Oracle Java entries from my path like these:
+
+```Bash
+C:\Program Files (x86)\Common Files\Oracle\Java\javapath
+C:\ProgramData\Oracle\Java\javapath
+C:\Program Files\Java\jdk1.8.0_162\bin
+C:\Program Files\Java\jdk1.8.0_231\bin
 ```
 
 ## Configure Zookeeper
 
-Create the required zoo.cfg. In C:\apache-zookeeper-3.5.6-bin\conf, copy zoo_sample.cfg to zoo.cfg. 
-Open zoo.cfg in Notepad++. 
-Find and edit dataDir=/tmp/zookeeper to dataDir=C:\apache-zookeeper-3.5.6-bin\data
+Configure the independent Zookeeper. 
+
+1. In C:\apache-zookeeper-3.5.6-bin\conf, copy zoo_sample.cfg to zoo.cfg.
+2. Edit zoo.cfg:
+
+Change:
+
+```Bash
+dataDir=/tmp/zookeeper
+```
+
+to:
+
+```Bash
+dataDir=C:\apache-zookeeper-3.5.6-bin\data
+```
 
 ## Configure Kafka
 
-For convenience, copy the C:\kafka_2.12-2.3.0\config\server.properties file 
-from the config folder to the C:\kafka_2.12-2.3.0\bin\windows folder. 
-Open server.properties in Notepad++. 
-Find and edit log.dirs=/tmp/kafka-logs to log.dirs=C:\kafka_2.12-2.3.0\logs
+Simplify later commands by moving the Kafka configuration file to the same folder as the executables.
+
+1. Copy C:\kafka_2.12-2.4.1\config\server.properties to C:\kafka_2.12-2.4.1\bin\windows.
+2. If needed, edit server.properties (in C:\kafka_2.12-2.4.1\bin\windows):
+
+Change:
+
+```Bash
+log.dirs=/tmp/kafka-logs
+```
+
+to:
+
+```Bash
+log.dirs=C:\kafka_2.12-2.4.1\kafka-logs
+```
 
 ## Start Zookeeper Service
 
-Start the Zookeeper service. 
+Start Zookeeper service. 
 Open PowerShell As Administrator (from anywhere) and run the following. 
+
 Note the port and keep the window open. 
-Zookeeper will run on default port 2181, you can change the default port in <C:\apache-zookeeper-3.5.6-bin\conf\zoo.cfg> file.
+Zookeeper will run on default port 2181, you can change the default port in the zoo.cfg file.
 
 ```PowerShell
 zkServer
@@ -120,17 +173,18 @@ zkServer
 
 ## Start Kafka Service
 
-Start the Kafka service. 
-Open a new PowerShell As Administrator window in the C:\kafka_2.12-2.2.0\bin\windows folder and run the following. 
+Start Kafka service. 
+Open a new PowerShell As Administrator window in the C:\kafka_2.12-2.4.1\bin\windows folder and run the following. 
+
 Keep the window open.
 
 ```PowerShell
  .\kafka-server-start.bat .\server.properties
 ```
 
-## Working with Kafka
+## Working with Kafka - Understand These Commands
 
-To run these, open PowerShell as Admininstrator in <C:\kafka_2.12-2.3.0\bin\windows>.
+To run these, open PowerShell as Admininstrator in <C:\kafka_2.12-2.4.1\bin\windows>.
 
 To create a topic called test, run:
 
@@ -209,7 +263,26 @@ java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kaf
 
 <http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html>
 
-## Reference
+## More about "Edit System Environment Variables"
 
-See <https://bitbucket.org/professorcase/h07>.
-See <https://bitbucket.org/professorcase/h07>.
+Setting your system environment variables is important when running Windows and using Linux-based tools. 
+
+To edit:
+
+1. Hit the Windows key and type "Edit the System Environment Variables" until it appears.
+
+1. Click on the menu option to open it.
+
+1. Click "Environment Variables" button.
+
+1. There are two areas.  Don't use the top "user variables" - use the "Systemv variables" below.
+
+1. They are alphabetical - scroll to verify each entry uses the path on your machine.
+
+Here's how to edit the Path variable.
+
+[Image](../blob/masterREADME-figSystemEV.png?raw=true)
+
+Here's the entries you should see.
+
+[Image](../blob/master/README-figSystemPATH.png?raw=true)
