@@ -156,7 +156,7 @@ log.dirs=/tmp/kafka-logs
 to:
 
 ```Bash
-log.dirs=C:\kafka_2.12-2.4.1\kafka-logs
+log.dirs=tmp/kafka-logs
 ```
 
 ## Start Zookeeper Service
