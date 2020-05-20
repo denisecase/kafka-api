@@ -17,19 +17,6 @@ Source: https://github.com/denisecase/kafka-api
 * Apache Zookeeper, installed and working
 * Apache Kafka, installed and working
 
-## Configue Kafka
-
-Change server.properties file 
-
-From: 
-
-``log.dirs=/tmp/kafka-logs``
-
-To:
-
-``log.dirs=tmp/kafka-logs``
-
-
 ## Start Zookeeper Service
 
 Start Zookeeper service as you did previously. 
