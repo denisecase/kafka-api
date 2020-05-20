@@ -2,9 +2,7 @@
 
 Example Kafka Producer and Consumer apps.
 
-Article: <https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html>
-
-Source: https://github.com/denisecase/kafka-api
+- Article: <https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html>
 
 ## Recommended Environment
 
@@ -65,3 +63,11 @@ java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kaf
 
 <http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html>
 
+## Repository
+
+- Source: https://github.com/denisecase/kafka-api
+
+## Collaborators
+
+- Denise Case
+- Rohan Bhandari
