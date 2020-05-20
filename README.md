@@ -65,26 +65,3 @@ java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kaf
 
 <http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html>
 
-## More about "Edit System Environment Variables"
-
-Setting your system environment variables is important when running Windows and using Linux-based tools. 
-
-To edit:
-
-1. Hit the Windows key and type "Edit the System Environment Variables" until it appears.
-
-1. Click on the menu option to open it.
-
-1. Click "Environment Variables" button.
-
-1. There are two areas.  Don't use the top "user variables" - use the "Systemv variables" below.
-
-1. They are alphabetical - scroll to verify each entry uses the path on your machine.
-
-Here's how to edit the Path variable.
-
-[Image](../blob/masterREADME-figSystemEV.png?raw=true)
-
-Here's the entries you should see.
-
-[Image](../blob/master/README-figSystemPATH.png?raw=true)
