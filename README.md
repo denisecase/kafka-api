@@ -1,67 +1,112 @@
 # kafka-api
 
-Example Kafka Producer and Consumer apps.
+Explore super-fast Apache Kafka.
 
-- Article: <https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html>
+- [Quick Start](https://kafka.apache.org/quickstart). 
+- [Tutorial](https://kafka.apache.org/31/documentation/streams/tutorial)
 
-## Recommended Environment
+## Recommended Tools
 
 * [VS Code](https://code.visualstudio.com/)
 * [VS Code Extension - Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+* [Context Menu: Add Open PowerShell Here as Administrator](https://www.tenforums.com/tutorials/60177-add-open-powershell-window-here-administrator-windows-10-a.html)
 
 ## Prerequisities
 
 * OpenJDK or JDK (8 or up)
-* Apache Zookeeper, installed and working
-* Apache Kafka, installed and working
 
-## Start Zookeeper Service
+-----
 
-Start Zookeeper service as you did previously. 
+## 1. Install Apache Kafka
 
-## Start Kafka Service
+  - Go to Apache Kafka Downloads
+  - Download kafka_2.13-3.1.0.tgz (~84 MB)
+  - Extract it: Open Git Bash and run `tar -xzf kafka_2.13-3.1.0.tgz`
+  - Move the folder to C:\
 
-Start Kafka service. 
+## 2. Configure Apache Kafka
 
-## Create the Topic
+* Configure Kafka (change 2 lines):
+  - In C:\kafka_2.13-3.1.0/config/zookeeper.properties, set:
+  - `dataDir=C:/kafka_2.13-3.1.0/zookeeper-data`
+  - In C:\kafka_2.13-3.1.0/config/server.properties, set:
+  - `log.dirs=C:/kafka_2.13-3.1.0/kafka-logs`
 
-Create a Kafka topic. 
+-----
+  
+## 3. Start Zookeeper Service (PS Process 1 - keep open, minimize)
 
-## Compile and Build the Fat Jar File
+`C:\kafka_2.13-3.1.0\bin\windows\zookeeper-server-start.bat C:\kafka_2.13-3.1.0\config\zookeeper.properties`
 
-Open PowerShell as Administrator in the root project folder, compile the code using Maven and create an executable jar file. Generated artificacts can be found in the new 'target' folder.
+## 4. Start Kafka Service (PS Process 2 - keep open, minimize)
+
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-server-start.bat C:\kafka_2.13-3.1.0\config\server.properties`
+
+-----
+
+## 5. Create a Kakfa Topic (PS Process 3 - keep open, producer)
+
+Create a Topic to Store Events:
+
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-topics.bat --create --topic quickstart-events --bootstrap-server localhost:9092`
+
+Write some events to the topic:
+
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-console-producer.bat --topic quickstart-events --bootstrap-server localhost:9092`
+
+
+## 6. Read from a Kakfa Topic (PS Process 4 - keep open, consumer)
+
+Read the events:
+
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-console-consumer.bat --topic quickstart-events --from-beginning --bootstrap-server localhost:9092`
+
+-----
+
+## Run Streams Example
+
+Open PowerShell as Administrator in the root project folder, compile the code using Maven and create an executable jar file. Generated artifacts can be found in the new 'target' folder.
 
 ```PowerShell
-mvn clean compile assembly:single
+mvn clean package
+mvn exec:java -D exec.mainClass=myapps.Pipe
 ```
 
-## Start Consumer
+## Create Topics and Rerun (Three New PS Process Windows)
 
-Open PowerShell as Administrator in the root project folder, start the original consumer app using topic test and group1 with:
+Create input topic:
 
-```PowerShell
-java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.Consumer test group1
-```
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-topics.bat --create --topic streams-plaintext-input --bootstrap-server localhost:9092`
 
-## Start Producer
+Write some events to the input topic:
 
-Open a new PowerShell as Administrator in the root project folder, start the Producer app using topic test:
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-console-producer.bat --topic streams-plaintext-input --bootstrap-server localhost:9092`
 
-```PowerShell
-java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.Producer test
-java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerHello test
-java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerSentence test
-java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kafka.simple.ProducerSentenceRandom test
-```
+Read from pipe output topic:
 
-## Test Communications
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-console-consumer.bat --topic streams-pipe-output --from-beginning --bootstrap-server localhost:9092`
 
-1. Type some messages for the Producer.
-1. Verify the messages are output by the Consumer.
+Send content to input topic:
 
-## See also
+`type file-input.txt | C:\kafka_2.13-3.1.0\bin\windows\kafka-console-producer.bat --topic streams-plaintext-input --bootstrap-server localhost:9092`
 
-<http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html>
+Read from wordcount output topic:
+
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-console-consumer.bat --topic streams-wordcount-output --from-beginning --bootstrap-server localhost:9092`
+
+Read from linesplit output topic:
+
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-console-consumer.bat --topic streams-linesplit-output --from-beginning --bootstrap-server localhost:9092`
+
+## Explore
+
+Get information about the topic.
+
+`C:\kafka_2.13-3.1.0\bin\windows\kafka-topics.bat --topic quickstart-events --bootstrap-server localhost:9092 --describe`
+
+## Resources
+
+- <https://docs.confluent.io/4.1.1/streams/quickstart.html>
 
 ## Repository
 
@@ -70,4 +115,4 @@ java -cp target/kafka-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.spnotes.kaf
 ## Collaborators
 
 - Denise Case
-- Rohan Bhandari
+
